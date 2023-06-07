@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;700&display=swap');
+
+
+body{
+    font-family: 'Titillium Web', sans-serif;
+    background-color: #21252b;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+#title{
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 84px;
+    font-weight: bold;
+}
+
+#score{
+    position: absolute;
+    right: 8rem;
+    top:4rem;
+    font-size: 24px;
+    font-weight: bold;
+
+    background-color: #00c74d;
+    box-shadow: 0 10px 30px #00ff0c1a,0 -4px #00913C inset, 0 2px #35d87b inset;
+    border-radius: 8px;
+    padding: 10px 20px;
+}
+
+#item_name{
+    font-size: 28px;
+    text-decoration: underline #00c74d;
+    font-weight: bold;
+}
+
+  #container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slot{
+    display: flex;
+    background: #262a30;
+    padding: 60px 0 60px 0; 
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #image{
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    animation: roll .45s linear;
+}
+
+#form{
+    margin: 2rem 0 4rem 0;
+    width: 100%;
+    text-align: center;
+}
+
+#input{
+    font-family: 'Titillium Web', sans-serif;
+    background-color: #181a1e;
+    border: none;
+    border-radius: 8px;
+    height: 40px;
+    width: 30%;
+    padding:10px;
+    font-size: 24px;
+    padding-left: 20px;
+    color:white;
+    font-weight: bold;
+}
+
+@keyframes roll {
+    0%, 100% {
+      transform: translateY(0);
+      filter: blur(8px);
+    }
+    10%{
+        transform: translateY(-50px);
+        filter: blur(8px);
+    }
+    15%{
+        transform: translateY(-100px);
+        filter: blur(8px);
+    }
+    20%{
+        transform: translateY(-150px);
+        filter: blur(8px);
+    }
+    25% {
+      transform: translateY(-200px);
+      visibility: hidden;
+    }
+    30% {
+        transform: translateY(250px);
+        visibility: hidden;
+      }
+    35% {
+        transform: translateY(100px);
+        filter: blur(8px);
+    }
+    40% {
+        transform: translateY(50px);
+        filter: blur(8px);
+    }
+    50% {
+        transform: translateY(20px);
+        filter: blur(8px);
+    }
+    55%{
+        transform: translateY(-50px);
+        filter: blur(8px);
+    }
+    60%{
+        transform: translateY(-100px);
+        filter: blur(8px);
+    }
+    65% {
+      transform: translateY(-200px);
+      filter: blur(8px);
+      
+    }
+    70% {
+        transform: translateY(250px);
+        filter: blur(8px);
+       
+      }
+    75% {
+        transform: translateY(150px);
+        filter: blur(8px);
+    }
+    85% {
+        transform: translateY(100px);
+        filter: blur(8px);
+    }
+    90% {
+        transform: translateY(50px);
+        filter: blur(8px);
+    }
+    100% {
+        transform: translateY(0px);
+        filter: blur(0px);
+    }
+  }
+
+  .box {
+    background: #181a1e;
+    width: 250px;
+    height: 260px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 20px;
+    animation: 3s infinite alternate slidein;
+  }
+  
+  .boxes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .buttons {
+    margin: 1rem 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px
+  }
+
+  .buttons p{
+    font-size: 10px;
+    
+  }
+
+  button {
+    font-family: 'Titillium Web', sans-serif;
+    cursor: pointer;
+    font-size: 1.8rem;
+    margin: 0 0.2rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: #00c74d;
+    box-shadow: 0 10px 30px #00ff0c1a,0 -4px #00913C inset, 0 2px #35d87b inset;
+    border-radius: 8px;
+    padding: 20px 40px;
+  }
+
+  #submit{
+    cursor: pointer;
+    margin-left: 1rem;
+    font-size: 1rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: #00c74d;
+    box-shadow: 0 10px 30px #00ff0c1a,0 -4px #00913C inset, 0 2px #35d87b inset;
+    border-radius: 8px;
+  }
