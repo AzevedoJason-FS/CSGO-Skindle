@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import Logo from "../static/logo.png";
+import { config } from '../constants'
 
 const LandingPage = () => {
   /* eslint-disable no-unused-vars,react/no-unknown-property */
@@ -19,6 +20,7 @@ const LandingPage = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   let form = document.getElementById("form");
   let itemName = document.getElementById("item_name");
+  
 
   let d = new Date();
   d.setTime(d.getTime() + 10000 * 900 * 20000);
@@ -31,8 +33,10 @@ const LandingPage = () => {
     el.style.display = "block";
   };
 
+  const url = config.url.API_URL
+
   useEffect(() => {
-    axios.get("/api/items").then((response) => {
+    axios.get(url).then((response) => {
       setItems(response.data);
       console.log(response.data);
     });
