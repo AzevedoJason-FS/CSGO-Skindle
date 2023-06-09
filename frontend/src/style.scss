@@ -321,3 +321,15 @@ button {
     transform: translateY(-30px);
   }
 }
+
+.rolling{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10rem;
+}
+
+#loading{
+  font-size: 42px;
+  margin: 0;
+}
