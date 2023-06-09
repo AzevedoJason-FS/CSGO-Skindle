@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from "react";
+import Modal from 'react-modal';
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
@@ -6,13 +7,16 @@ import Logo from "../static/logo.png";
 
 const LandingPage = () => {
   /* eslint-disable no-unused-vars,react/no-unknown-property */
+  Modal.setAppElement('.app');
   const [items, setItems] = useState();
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(() => Math.floor(Math.random() * 53));
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [cookies, setCookie] = useCookies(["high_score"]);
   const [wobble, setWobble] = useState(0);
+  const [hidden, setHide] = useState(0);
+  const [modalIsOpen, setIsOpen] = useState(false);
   let form = document.getElementById("form");
   let itemName = document.getElementById("item_name");
 
@@ -55,40 +59,56 @@ const LandingPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (answer === "" || answer !== items[index].name.toLowerCase()) {
-      hide(form);
+    if (
+      answer === "" ||
+      answer !== items[index].name.toLowerCase().replace(/[^\w ]/g, "")
+    ) {
+      setHide(1);
       setAnswer("");
       setScore(0);
-      setTimeout(() => {
-        submitHandler();
-      }, 1000);
+      setIsOpen(true);
     }
-    if (answer === items[index].name.toLowerCase()) {
+    if (answer === items[index].name.toLowerCase().replace(/[^\w ]/g, "")) {
       hide(form);
-      setScore(score + 1);
-      setWobble(1)
+      // setScore(score + 1);
+      setScore((prev) => prev + 1);
+      setWobble(1);
       show(itemName);
     }
     if (score > cookies.high_score) {
-      setCookie("high_score", highScore + 1, { path: "/", expires: d });
+      setCookie("high_score", highScore === score, { path: "/", expires: d });
     }
   };
+
+  function closeModal() {
+    setIsOpen(false);
+    setHide(0);
+    submitHandler();
+  }
 
   return (
     <>
       {items && items.length > 0 ? (
         <div id="container" key={items[index]._id}>
           <ToastContainer />
+          <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        shouldCloseOnOverlayClick={false}
+        contentLabel="Example Modal"
+      >
+        <h2 id="modal_title">Thats the Incorrect Item 😔</h2>
+        <p>Correct Item Was: <b>{items[index].name}</b></p>
+        <img id="modal_image" src={items[index].img_url} alt="profile img" />
+        <button id="modal_button" onClick={closeModal}>close</button>
+      </Modal>
           <img id="logo" src={Logo} />
           <div className="score_box">
             <div className="score_detail">
               <p>Score:</p>
               <p id="score">{score}</p>
-              <p
-                id="float"
-                onAnimationEnd={() => setWobble(0)}
-                wobble={wobble}
-              >
+              <p id="float" onAnimationEnd={() => setWobble(0)} wobble={wobble}>
                 +1
               </p>
             </div>
@@ -109,7 +129,7 @@ const LandingPage = () => {
               ✅ {items[index].name}
             </p>
           </div>
-          <div id="form" style={{ display: "block" }}>
+          <div id="form" hidden={hidden}>
             <input
               id="input"
               placeholder="Guess the Item Skin"
@@ -133,5 +153,25 @@ const LandingPage = () => {
     </>
   );
 };
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    zIndex:'7',
+    right: 'auto',
+    borderRadius: '10px',
+    display:'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    bottom: 'auto',
+    border:'',
+    backgroundColor: 'rgb(66 71 79)',
+    boxShadow: 'rgb(3 3 3 / 10%) 0px 10px 30px, #1b1b1b 0px -4px inset, #1b1b1b 0px 2px inset',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+
 
 export default LandingPage;
