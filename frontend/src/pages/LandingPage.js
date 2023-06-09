@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import Logo from "../static/logo.png";
+import { ReactComponent as Rolling } from "../static/rolling.svg";
 import { config } from '../constants'
 
 const LandingPage = () => {
@@ -13,7 +14,6 @@ const LandingPage = () => {
   const [index, setIndex] = useState(() => Math.floor(Math.random() * 53));
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
   const [cookies, setCookie] = useCookies(["high_score"]);
   const [wobble, setWobble] = useState(0);
   const [hidden, setHide] = useState(0);
@@ -39,7 +39,10 @@ const LandingPage = () => {
       setItems(response.data);
       // console.log(response.data);
     });
-    setHighScore(score);
+    console.log(score)
+    if (score > cookies.high_score || !cookies.high_score) {
+      setCookie("high_score", score, { path: "/", expires: d });
+    }
   }, [score]);
 
   const submitHandler = () => {
@@ -76,9 +79,6 @@ const LandingPage = () => {
       setScore((prev) => prev + 1);
       setWobble(1);
       show(itemName);
-    }
-    if (score > cookies.high_score || !cookies.high_score) {
-      setCookie("high_score", highScore, { path: "/", expires: d });
     }
   };
 
@@ -150,7 +150,10 @@ const LandingPage = () => {
           </div>
         </div>
       ) : (
-        <p>None</p>
+        <div className="rolling">
+        <Rolling />
+        <h2 id="loading">Loading..</h2>
+        </div>
       )}
     </>
   );
