@@ -5,7 +5,7 @@ os: linux
 
 files:
   - source: /
-    destination: /home/ec2-user/server/frontend
+    destination: /home/ec2-user/server/src/frontend
 
 permissions:
   - object: /
