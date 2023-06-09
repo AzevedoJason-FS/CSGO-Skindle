@@ -21,7 +21,6 @@ const LandingPage = () => {
   let form = document.getElementById("form");
   let itemName = document.getElementById("item_name");
   
-
   let d = new Date();
   d.setTime(d.getTime() + 10000 * 900 * 20000);
 
@@ -38,7 +37,7 @@ const LandingPage = () => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setItems(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     });
     setHighScore(score);
   }, [score]);
@@ -74,17 +73,16 @@ const LandingPage = () => {
     }
     if (answer === items[index].name.toLowerCase().replace(/[^\w ]/g, "")) {
       hide(form);
-      // setScore(score + 1);
       setScore((prev) => prev + 1);
       setWobble(1);
       show(itemName);
     }
-    if (score > cookies.high_score) {
-      setCookie("high_score", highScore === score, { path: "/", expires: d });
+    if (score > cookies.high_score || !cookies.high_score) {
+      setCookie("high_score", highScore, { path: "/", expires: d });
     }
   };
 
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
     setHide(0);
     submitHandler();
@@ -107,7 +105,7 @@ const LandingPage = () => {
         <img id="modal_image" src={items[index].img_url} alt="profile img" />
         <button id="modal_button" onClick={closeModal}>close</button>
       </Modal>
-          <img id="logo" src={Logo} />
+          <img id="logo" src={Logo} alt="CS:Skindle Logo"/>
           <div className="score_box">
             <div className="score_detail">
               <p>Score:</p>
@@ -118,15 +116,15 @@ const LandingPage = () => {
             </div>
             <div className="score_detail">
               <p>High Score:</p>
-              <p id="score">{cookies.high_score}</p>
+              {cookies.high_score && <p id="score">{cookies.high_score}</p> }
             </div>
           </div>
           <div className="slot">
             <div className="boxes">
               <div className="box">
-                <img id="image" src={items[index].img_url} alt="profile img" />
-                <img id="image" src={items[index].img_url} alt="profile img" />
-                <img id="image" src={items[index].img_url} alt="profile img" />
+                <img id="image" src={items[index].img_url} alt="Item Image" />
+                <img id="image" src={items[index].img_url} alt="Item Image" />
+                <img id="image" src={items[index].img_url} alt="Item Image" />
               </div>
             </div>
             <p id="item_name" style={{ display: "none" }}>
