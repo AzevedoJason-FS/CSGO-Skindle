@@ -2,12 +2,10 @@
 version: 0.2
 phases:
   pre_build:
-    base-directory: 'frontend/*'
     commands:
       #installs dependencies into the node_modules/ directory
       - npm install
   build:
-    base-directory: 'frontend/*'
     commands:
       - echo Build started on `date`
       - echo Compiling
@@ -17,7 +15,6 @@ phases:
       - echo Build completed on `date`
 # Include only the files required for your application to run.
 artifacts:
-  base-directory: 'frontend/*'
   files:
     - public/**/*
     - src/**/*
