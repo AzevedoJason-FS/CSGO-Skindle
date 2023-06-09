@@ -4,13 +4,11 @@ phases:
   pre_build:
     commands:
       #installs dependencies into the node_modules/ directory
-      - cd /frontend
       - npm install
   build:
     commands:
       - echo Build started on `date`
       - echo Compiling
-      - cd /frontend
       - npm run build
   post_build:
     commands:
@@ -21,5 +19,5 @@ artifacts:
     - public/**/*
     - src/**/*
     - package.json
-    - appspec.yml
+    - appspec.yml/**/*
     - scripts/**/*

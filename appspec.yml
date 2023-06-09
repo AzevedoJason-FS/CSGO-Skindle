@@ -16,16 +16,16 @@ permissions:
 hooks:
 
   BeforeInstall:
-    - location: frontend/scripts/before_install.sh
+    - location: /scripts/before_install.sh
       timeout: 300
       runas: root
   
   AfterInstall:
-    - location: frontend/scripts/after_install.sh
+    - location: /scripts/after_install.sh
       timeout: 300
       runas: root
 
   ApplicationStart:
-    - location: frontend/scripts/app_start.sh
+    - location: /scripts/app_start.sh
       timeout: 300
       runas: root
