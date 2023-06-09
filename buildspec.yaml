@@ -5,19 +5,22 @@ phases:
     base-directory: 'frontend/*'
     commands:
       #installs dependencies into the node_modules/ directory
-      - cd ./frontend
       - npm install
   build:
     base-directory: 'frontend/*'
     commands:
       - echo Build started on `date`
       - echo Compiling
-      - cd ./frontend
       - npm run build
   post_build:
     commands:
       - echo Build completed on `date`
 # Include only the files required for your application to run.
 artifacts:
+  base-directory: 'frontend/*'
   files:
-    - "**/*"
+    - public/**/*
+    - src/**/*
+    - package.json
+    - appspec.yml
+    - scripts/**/*
