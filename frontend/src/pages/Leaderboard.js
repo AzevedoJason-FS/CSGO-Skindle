@@ -22,13 +22,14 @@ const Leaderboard = () => {
     <div id="container">
       <Nav />
       <div className="main">
-        <h2>Leaderboard</h2>
+        <h2 id="leaderboard_title">Leaderboard</h2>
         {users &&
           users.map((user) => {
             return (
-              <div key={user.id}>
-                <p>{user.name}</p>
-                <p>{user.high_score}</p>
+              <div className="user_div" key={user.id}>
+                
+                <p id="high_score_user" key={user.id}>{user.name}</p>
+                <p id="high_score_number" key={user.id}>{user.high_score}</p>
               </div>
             );
           })}

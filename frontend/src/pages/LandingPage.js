@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import Logo from "../static/logo.png";
+import Template from "../static/slot-template.png";
 import { ReactComponent as Rolling } from "../static/rolling.svg";
 import { config } from "../constants";
 import Nav from "../components/Nav";
@@ -18,16 +19,13 @@ const LandingPage = () => {
   const [cookies, setCookie] = useCookies(["high_score"]);
   const [wobble, setWobble] = useState(0);
   const [hidden, setHide] = useState(0);
+  const [hiddenBtn, setHideBtn] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
   let form = document.getElementById("form");
   let itemName = document.getElementById("item_name");
 
   let d = new Date();
   d.setTime(d.getTime() + 10000 * 900 * 20000);
-
-  const hide = (el) => {
-    el.style.display = "none";
-  };
 
   const show = (el) => {
     el.style.display = "block";
@@ -46,6 +44,8 @@ const LandingPage = () => {
   }, [score]);
 
   const submitHandler = () => {
+    setHideBtn(1);
+    setHide(0);
     if (index <= items.length - 1) {
       setIndex(Math.floor(Math.random() * items.length));
     } else {
@@ -75,9 +75,10 @@ const LandingPage = () => {
       setIsOpen(true);
     }
     if (answer === items[index].name.toLowerCase().replace(/[^\w ]/g, "")) {
-      hide(form);
+      setHide(1);
       setScore((prev) => prev + 1);
       setWobble(1);
+      setHideBtn(0);
       show(itemName);
     }
   };
@@ -136,6 +137,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="slot">
+            <img id="slot_template" src={Template} alt="Item Image" />
               <div className="boxes">
                 <div className="box">
                   <img id="image" src={items[index].img_url} alt="Item Image" />
@@ -143,10 +145,10 @@ const LandingPage = () => {
                   <img id="image" src={items[index].img_url} alt="Item Image" />
                 </div>
               </div>
-              <p id="item_name" style={{ display: "none" }}>
+            </div>
+            <p id="item_name" style={{ display: "none" }}>
                 ✅ {items[index].name}
               </p>
-            </div>
             <div id="form" hidden={hidden}>
               <input
                 id="input"
@@ -159,10 +161,9 @@ const LandingPage = () => {
               </button>
             </div>
             <div className="buttons">
-              <button id="spinner" onClick={submitHandler}>
+              <button id="spinner" hidden={hiddenBtn} onClick={submitHandler}>
                 Randomize
               </button>
-              <p>Jason Azevedo @CS:GO Skindle Project</p>
             </div>
           </div>
         </div>
