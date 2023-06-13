@@ -36,7 +36,6 @@ const LandingPage = () => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setItems(response.data);
-      // console.log(response.data);
     });
     if (score > cookies.high_score || !cookies.high_score) {
       setCookie("high_score", score, { path: "/", expires: d });

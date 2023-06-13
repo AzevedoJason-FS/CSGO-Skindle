@@ -13,26 +13,50 @@ const Leaderboard = () => {
       setUsers(response.data);
       console.log(response.data);
     });
-    // if (score > cookies.high_score || !cookies.high_score) {
-    //   setCookie("high_score", score, { path: "/", expires: d });
-    // }
   }, []);
+
+  const topUsers = (i) => {
+    switch (i) {
+      case 0:
+        return "user_div_top1";
+      case 1:
+        return "user_div_top2";
+      case 2:
+        return "user_div_top3";
+      default:
+        return "user_div";
+    }
+  };
 
   return (
     <div id="container">
       <Nav />
       <div className="main">
         <h2 id="leaderboard_title">Leaderboard</h2>
-        {users &&
-          users.map((user) => {
-            return (
-              <div className="user_div" key={user.id}>
-                
-                <p id="high_score_user" key={user.id}>{user.name}</p>
-                <p id="high_score_number" key={user.id}>{user.high_score}</p>
-              </div>
-            );
-          })}
+        <div className="leaderboard">
+          <div className="top3">
+            {users &&
+              users.slice(0, 3).map((user, i) => {
+                return (
+                  <div className={topUsers(i)} key={i}>
+                    <p id="high_score_user">{user.name}</p>
+                    <p id="top_high_score_number">{user.high_score}</p>
+                  </div>
+                );
+              })}
+          </div>
+          <div className="remain_users">
+            {users &&
+              users.slice(3).map((user) => {
+                return (
+                  <div className="user_div" key={user._id}>
+                    <p id="high_score_user">{user.name}</p>
+                    <p id="high_score_number">{user.high_score}</p>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
       </div>
     </div>
   );
