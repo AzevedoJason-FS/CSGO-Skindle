@@ -18,13 +18,40 @@ const Leaderboard = () => {
   const topUsers = (i) => {
     switch (i) {
       case 0:
-        return "user_div_top1";
       case 1:
-        return "user_div_top2";
       case 2:
-        return "user_div_top3";
+        return "user_div_top";
       default:
         return "user_div";
+    }
+  };
+
+  const topUserBadge = (i) => {
+    switch (i) {
+      case 0:
+        return (
+          <div className="quiz-medal">
+            <div className="quiz-medal__circle quiz-medal__circle--gold">
+              <span>1</span>
+            </div>
+          </div>
+        );
+      case 1:
+        return (
+          <div className="quiz-medal">
+            <div className="quiz-medal__circle quiz-medal__circle--silver">
+              <span>2</span>
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="quiz-medal">
+            <div className="quiz-medal__circle quiz-medal__circle--bronze">
+              <span>3</span>
+            </div>
+          </div>
+        );
     }
   };
 
@@ -32,13 +59,16 @@ const Leaderboard = () => {
     <div id="container">
       <Nav />
       <div className="main">
-        <h2 id="leaderboard_title">Leaderboard</h2>
+        <div className="leaderboard_box">
+          <p id="leaderboard_title">Leaderboard</p>
+        </div>
         <div className="leaderboard">
           <div className="top3">
             {users &&
               users.slice(0, 3).map((user, i) => {
                 return (
                   <div className={topUsers(i)} key={i}>
+                    {topUserBadge(i)}
                     <p id="high_score_user">{user.name}</p>
                     <p id="top_high_score_number">{user.high_score}</p>
                   </div>

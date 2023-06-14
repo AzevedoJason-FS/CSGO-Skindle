@@ -37,10 +37,7 @@ const LandingPage = () => {
     axios.get(url).then((response) => {
       setItems(response.data);
     });
-    if (score > cookies.high_score || !cookies.high_score) {
-      setCookie("high_score", score, { path: "/", expires: d });
-    }
-  }, [score]);
+  }, []);
 
   const submitHandler = () => {
     setHideBtn(1);
@@ -72,6 +69,9 @@ const LandingPage = () => {
       setAnswer("");
       setScore(0);
       setIsOpen(true);
+      if (score > cookies.high_score || !cookies.high_score) {
+        setCookie("high_score", score, { path: "/", expires: d });
+      }
     }
     if (answer === items[index].name.toLowerCase().replace(/[^\w ]/g, "")) {
       setHide(1);
@@ -136,7 +136,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="slot">
-            <img id="slot_template" src={Template} alt="Item Image" />
+              <img id="slot_template" src={Template} alt="Item Image" />
               <div className="boxes">
                 <div className="box">
                   <img id="image" src={items[index].img_url} alt="Item Image" />
@@ -146,14 +146,15 @@ const LandingPage = () => {
               </div>
             </div>
             <p id="item_name" style={{ display: "none" }}>
-                ✅ {items[index].name}
-              </p>
+              ✅ {items[index].name}
+            </p>
             <div id="form" hidden={hidden}>
               <input
                 id="input"
+                className="input_control"
                 placeholder="Guess the Item Skin"
                 onChange={onChange}
-                autoComplete="false"
+                autoComplete="off"
               ></input>
               <button id="submit" onClick={(e) => onSubmit(e)}>
                 Submit
