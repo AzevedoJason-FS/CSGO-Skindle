@@ -20,6 +20,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #262a30;
+}
+
+.main_leaderboard {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .top_bar {
@@ -38,7 +47,8 @@ body {
 
 .score_box {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 20px;
   align-items: flex-end;
   position: absolute;
   right: 4rem;
@@ -60,7 +70,7 @@ body {
 #score {
   font-size: 24px;
   font-weight: bold;
-  background-color: #181a1e;
+  background-color: #21252b;
   border-radius: 8px;
   padding: 10px 40px;
 }
@@ -81,11 +91,14 @@ body {
 .slot {
   position: relative;
   display: flex;
-  background: #262a30;
   width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
 }
 
 #image {
@@ -123,13 +136,41 @@ body {
   padding: 10px;
   font-size: 24px;
   padding-left: 20px;
+  border: 1px solid #21252b;
+  border-radius: 5px;
+  background-color: #21252b;
   color: white;
   font-weight: bold;
+  transition: all 0.2s ease-in-out;
 }
 
-#input:focus{
+#input:focus {
+  outline: 0;
+  border: 2px solid #2b2f36;
+}
+
+#input_modal:focus {
   outline: 0;
   border-bottom: 1px solid white;
+}
+
+#input_modal {
+  font-family: "Titillium Web", sans-serif;
+  background-color: transparent;
+  overflow-x: hidden;
+  border: none;
+  height: 40px;
+  width: 80%;
+  padding: 10px;
+  font-size: 24px;
+  padding-left: 20px;
+  color: white;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+#input_modal:nth-child(3) {
+  margin-bottom: 2rem;
 }
 
 .box {
@@ -140,7 +181,6 @@ body {
   border-radius: 14px;
   margin: 5px;
   padding: 20px;
-  animation: 3s infinite alternate slidein;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -202,6 +242,7 @@ button {
   box-shadow: 0 10px 30px #00ff0c1a, 0 -4px #00913c inset, 0 2px #35d87b inset;
   border-radius: 8px;
   padding: 20px 40px;
+  transition: all 0.2s ease-in-out;
 }
 
 button:active {
@@ -213,7 +254,6 @@ button:active {
 button:hover {
   transform: translateY(-1px);
   background-color: #00ff62;
-  transition: ease-in-out all 0.2s;
 }
 
 #modal_button {
@@ -225,7 +265,7 @@ button:hover {
   color: white;
   font-weight: bold;
   background-color: grey;
-  box-shadow: 0 10px 30px #ffffff1a, 0 -4px #3a3939 inset, 0 1px #ffffff1a inset;
+  box-shadow: 0 10px 30px #ffffff1a, 0 -4px #656565 inset, 0 1px #ffffff1a inset;
   border-radius: 8px;
   padding: 20px 40px;
 }
@@ -234,6 +274,11 @@ button:hover {
   background-color: rgb(90, 90, 90);
   box-shadow: 0 10px 30px #bbbbbb1a, 0 -3px #3a3939 inset, 0 0px #ffffff1a inset;
   transform: translateY(4px);
+}
+
+#modal_back {
+  cursor: pointer;
+  color: rgb(202, 202, 202);
 }
 
 #submit {
@@ -275,6 +320,24 @@ button:hover {
 #modal_image {
   width: 40%;
   margin-bottom: 2rem;
+}
+
+#submit_score_p {
+  cursor: pointer;
+  margin-top: 2rem;
+  color: #a3e8bf;
+}
+
+@keyframes floating {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 6px);
+  }
+  100% {
+    transform: translate(0, -0px);
+  }
 }
 
 @keyframes roll {
@@ -398,13 +461,12 @@ button:hover {
 
 .sidenav {
   position: relative;
-  width: 15%;
   float: left;
   background: #21252b;
-  overflow-x: hidden;
-  padding: 20px;
+  padding: 0 40px 0 20px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: flex-start;
 }
 
@@ -416,21 +478,17 @@ button:hover {
   margin-bottom: 2rem;
   display: flex;
   align-items: center;
+  transition: all 0.35s ease-in-out;
   gap: 20px;
 }
 
 #nav_link:hover {
   color: rgba(255, 255, 255, 0.611);
-  transition: ease-in-out all 0.2s;
+  margin-left: 4px;
 }
 
 #nav_link:nth-child(1) {
   margin-top: 4rem;
-}
-
-.footer {
-  position: absolute;
-  bottom: 1rem;
 }
 
 #footer_text {
@@ -438,7 +496,7 @@ button:hover {
   opacity: 0.5;
 }
 
-.leaderboard_box{
+.leaderboard_box {
   width: 90%;
   margin-bottom: 4rem;
 }
@@ -454,12 +512,21 @@ button:hover {
   border-radius: 20px;
 }
 
+.leaderboard_empty{
+  width: 80%;
+  padding: 40px;
+  background-color: #272b32;
+  border-radius: 20px;
+  text-align: center;
+}
+
 .user_div {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 80%;
+  margin: auto;
   border-bottom: 1px solid #31363e;
 }
 
@@ -495,14 +562,14 @@ button:hover {
 #high_score_number {
   font-size: 18px;
   font-weight: bold;
-  color: white;
+  color: #ffffff;
   margin: 0;
 }
 
 #top_high_score_number {
   font-size: 42px;
   font-weight: bold;
-  color: #00ee5c;
+  color: #ffffff;
   margin: 0;
 }
 
@@ -569,5 +636,18 @@ button:hover {
       $bronze-medal 50%,
       darken($bronze-medal, 5%) 50%
     );
+  }
+}
+
+// MEDIA QUERY
+@media screen and (max-width: 840px) {
+  #nav_link {
+    font-size: 20px;
+  }
+  #logo {
+    width: 500px;
+  }
+  #score {
+    font-size: 16px;
   }
 }

@@ -19,8 +19,10 @@ const LandingPage = () => {
   const [cookies, setCookie] = useCookies(["high_score"]);
   const [wobble, setWobble] = useState(0);
   const [hidden, setHide] = useState(0);
+  const [changeModal, setChangeModal] = useState(false);
   const [hiddenBtn, setHideBtn] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState("");
   let form = document.getElementById("form");
   let itemName = document.getElementById("item_name");
 
@@ -32,6 +34,7 @@ const LandingPage = () => {
   };
 
   const url = config.url.API_URL;
+  const urlPost = config.url.API_URL_USER_LEADERBOARD;
 
   useEffect(() => {
     axios.get(url).then((response) => {
@@ -59,6 +62,11 @@ const LandingPage = () => {
     setAnswer(input);
   };
 
+  const onChangeName = (e) => {
+    const name = e.target.value;
+    setName(name);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -82,6 +90,22 @@ const LandingPage = () => {
     }
   };
 
+  const onSubmitScore = (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: name,
+      high_score: cookies.high_score,
+    };
+    axios.post(urlPost, data).then((response) => {
+      return toast.success(response.data, {
+        autoClose: 4000,
+        theme: "colored",
+      });
+    });
+    closeModal()
+  };
+
   const closeModal = () => {
     setIsOpen(false);
     setHide(0);
@@ -100,18 +124,39 @@ const LandingPage = () => {
             shouldCloseOnOverlayClick={false}
             contentLabel="Example Modal"
           >
-            <h2 id="modal_title">Thats the Incorrect Item 😔</h2>
-            <p>
-              Correct Item Was: <b>{items[index].name}</b>
-            </p>
-            <img
-              id="modal_image"
-              src={items[index].img_url}
-              alt="profile img"
-            />
-            <button id="modal_button" onClick={closeModal}>
-              close
-            </button>
+            {changeModal ? (
+              <>
+                <h2 id="modal_title">Submit High Score</h2>
+                <input
+                  id="input_modal"
+                  placeholder="Display Name"
+                  onChange={onChangeName}
+                  autoComplete="off"
+                ></input>
+                <button id="submit" onClick={(e) => onSubmitScore(e)}>
+                  Submit Score
+                </button>
+                <p id="modal_back" onClick={() => setChangeModal(false)}>Back</p>
+              </>
+            ) : (
+              <>
+                <h2 id="modal_title">Thats the Incorrect Item 😔</h2>
+                <p>
+                  Correct Item Was: <b>{items[index].name}</b>
+                </p>
+                <img
+                  id="modal_image"
+                  src={items[index].img_url}
+                  alt="profile img"
+                />
+                <button id="modal_button" onClick={closeModal}>
+                  close
+                </button>
+                <p id="submit_score_p" onClick={() => setChangeModal(true)}>
+                  Submit High Score to Leaderboard
+                </p>
+              </>
+            )}
           </Modal>
           <Nav />
           <div className="main">
@@ -151,7 +196,6 @@ const LandingPage = () => {
             <div id="form" hidden={hidden}>
               <input
                 id="input"
-                className="input_control"
                 placeholder="Guess the Item Skin"
                 onChange={onChange}
                 autoComplete="off"
@@ -183,6 +227,9 @@ const customStyles = {
     left: "50%",
     zIndex: "7",
     right: "auto",
+    padding: "20px",
+    overflow: "hidden",
+    minWidth: "400px",
     borderRadius: "10px",
     display: "flex",
     flexDirection: "column",
@@ -191,7 +238,7 @@ const customStyles = {
     border: "",
     backgroundColor: "rgb(66 71 79)",
     boxShadow:
-      "rgb(3 3 3 / 10%) 0px 10px 30px, #1b1b1b 0px -4px inset, #1b1b1b 0px 2px inset",
+      "rgb(3 3 3 / 10%) 0px 10px 30px, rgb(46 46 46) 0px -4px inset, rgb(46 46 46) 0px 2px inset",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
   },

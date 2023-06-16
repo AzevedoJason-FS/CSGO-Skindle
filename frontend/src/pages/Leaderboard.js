@@ -11,7 +11,6 @@ const Leaderboard = () => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setUsers(response.data);
-      console.log(response.data);
     });
   }, []);
 
@@ -56,39 +55,55 @@ const Leaderboard = () => {
   };
 
   return (
-    <div id="container">
-      <Nav />
-      <div className="main">
-        <div className="leaderboard_box">
-          <p id="leaderboard_title">Leaderboard</p>
-        </div>
-        <div className="leaderboard">
-          <div className="top3">
-            {users &&
-              users.slice(0, 3).map((user, i) => {
-                return (
-                  <div className={topUsers(i)} key={i}>
-                    {topUserBadge(i)}
-                    <p id="high_score_user">{user.name}</p>
-                    <p id="top_high_score_number">{user.high_score}</p>
-                  </div>
-                );
-              })}
+    <>
+      {users && users.length > 0 ? (
+        <div id="container">
+          <Nav />
+          <div className="main_leaderboard">
+            <div className="leaderboard_box">
+              <p id="leaderboard_title">Leaderboard</p>
+            </div>
+            <div className="leaderboard">
+              <div className="top3">
+                {users &&
+                  users.slice(0, 3).map((user, i) => {
+                    return (
+                      <div className={topUsers(i)} key={i}>
+                        {topUserBadge(i)}
+                        <p id="high_score_user">{user.name}</p>
+                        <p id="top_high_score_number">{user.high_score}</p>
+                      </div>
+                    );
+                  })}
+              </div>
+              <div className="remain_users">
+                {users &&
+                  users.slice(3).map((user) => {
+                    return (
+                      <div className="user_div" key={user._id}>
+                        <p id="high_score_user">{user.name}</p>
+                        <p id="high_score_number">{user.high_score}</p>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
           </div>
-          <div className="remain_users">
-            {users &&
-              users.slice(3).map((user) => {
-                return (
-                  <div className="user_div" key={user._id}>
-                    <p id="high_score_user">{user.name}</p>
-                    <p id="high_score_number">{user.high_score}</p>
-                  </div>
-                );
-              })}
+        </div>
+      ) : (
+        <div id="container">
+          <Nav />
+          <div className="main_leaderboard">
+            <div className="leaderboard_box">
+              <p id="leaderboard_title">Leaderboard</p>
+            </div>
+            <div className="leaderboard_empty">
+                <h2 id="loading">Be the first on the leaderboard!</h2>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
