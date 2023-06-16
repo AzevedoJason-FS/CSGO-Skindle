@@ -23,7 +23,6 @@ const LandingPage = () => {
   const [hiddenBtn, setHideBtn] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
-  let form = document.getElementById("form");
   let itemName = document.getElementById("item_name");
 
   let d = new Date();
