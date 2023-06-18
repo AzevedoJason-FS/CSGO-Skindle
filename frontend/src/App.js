@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { React, Suspense, lazy } from "react";
+import { React, Suspense, lazy, useEffect } from "react";
 import "./style.scss";
 import { ReactComponent as RollingLoader } from "./static/rolling.svg";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,8 +9,10 @@ const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Leaderboard = lazy(() => import("./pages/Leaderboard"));
 
 const App = () => {
+  useEffect(() => {
     ReactGA.initialize('G-22B25JWC59');
-    ReactGA.send({ hitType: "pageview", page: "/", title: "Home" });
+    ReactGA.send("pageview");
+  })
   return (
     <div className="app">
       <Routes>
