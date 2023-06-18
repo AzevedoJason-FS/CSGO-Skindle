@@ -10,7 +10,7 @@ const Leaderboard = lazy(() => import("./pages/Leaderboard"));
 
 const App = () => {
     ReactGA.initialize('G-22B25JWC59');
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    ReactGA.send({ hitType: "pageview", page: "/", title: "Home" });
   return (
     <div className="app">
       <Routes>
